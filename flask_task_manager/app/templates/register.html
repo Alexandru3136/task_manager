@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Înregistrare</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .register-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        .register-container h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333333;
+        }
+        .register-container label {
+            display: block;
+            margin-bottom: 5px;
+            text-align: left;
+            font-size: 14px;
+            color: #555555;
+        }
+        .register-container input, .register-container select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #cccccc;
+            border-radius: 5px;
+        }
+        .register-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .register-container button:hover {
+            background-color: #218838;
+        }
+        .register-container a {
+            color: #007BFF;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .register-container a:hover {
+            text-decoration: underline;
+        }
+        .register-container p {
+            font-size: 14px;
+            color: #555555;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h2>Înregistrare</h2>
+        <form method="POST" action="{{ url_for('user_bp.register') }}">
+            <label for="username">Nume de utilizator:</label>
+            <input type="text" name="username" placeholder="Username" required><br>
+
+            <label for="email">Adresă de email:</label>
+            <input type="email" name="email" placeholder="Email" required><br>
+
+            <label for="password">Parolă:</label>
+            <input type="password" name="password" placeholder="Password" required><br>
+
+            <label for="role">Rol:</label>
+            <select id="role" name="role" required>
+                <option value="user">Utilizator</option>
+                <option value="admin">Administrator</option>
+            </select>
+
+            <button type="submit">Înregistrare</button>
+        </form>
+        <p>Ai deja un cont? <a href="{{ url_for('user_bp.login') }}">Autentificare</a></p>
+    </div>
+</body>
+</html>

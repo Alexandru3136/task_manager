@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body class="bg-light">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark bg-dark px-4">
+        <a class="navbar-brand" href="#">🚀 User Dashboard</a>
+        <a href="{{ url_for('user_bp.logout') }}" class="btn btn-danger">Logout</a>
+    </nav>
+
+    <div class="container mt-4">
+        <h2 class="mb-3">📋 My Tasks</h2>
+
+        {% if tasks %}
+        <div class="row">
+            {% for task in tasks %}
+            <div class="col-md-6">
+                <div class="card shadow-sm mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-tasks"></i> {{ task.title }}</h5>
+                        <p class="card-text"><strong>Due Date:</strong> {{ task.due_date if task.due_date else "No deadline" }}</p>
+                        <p class="card-text">
+                            <strong>Status:</strong>
+                            {% if task.completed %}
+                                <span class="badge bg-success">✅ Completed</span>
+                            {% else %}
+                                <span class="badge bg-warning text-dark">⏳ Pending</span>
+                            {% endif %}
+                        </p>
+
+                        <!-- Form pentru confirmarea task-ului -->
+                        {% if not task.completed %}
+                        <form action="{{ url_for('user_bp.confirm_task', task_id=task.id) }}" method="POST" class="mt-2">
+                            <label for="confirmation_link" class="form-label">🔗 Confirmation Link:</label>
+                            <div class="input-group">
+                                <input type="url" name="confirmation_link" class="form-control" placeholder="Paste confirmation link..." required>
+                                <button type="submit" class="btn btn-primary">Confirm</button>
+                            </div>
+                        </form>
+                        {% else %}
+                        <p class="text-success">
+                            <i class="fas fa-check-circle"></i> Submitted:
+                            <a href="{{ task.confirmation_link }}" target="_blank">{{ task.confirmation_link }}</a>
+                        </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="alert alert-info">No tasks available.</div>
+        {% endif %}
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
